@@ -21,5 +21,8 @@
        (filter is-triangle?)
        count))
 
+(defn part1 [input]
+  (count-triangles by-rows input))
+
 (defn part2 [input]
   (count-triangles by-cols input))
