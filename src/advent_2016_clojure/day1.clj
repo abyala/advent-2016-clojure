@@ -1,6 +1,6 @@
 (ns advent-2016-clojure.day1
   (:require [clojure.string :as str]
-            [advent-2016-clojure.utils :refer [abs] ]))
+            [advent-2016-clojure.utils :refer [abs]]))
 
 (defn parse-move
   "Parses a single element of form Lxxx or Rxxx, and returns vector of [dir distance]"
@@ -12,19 +12,21 @@
   [input]
   (map parse-move (str/split input #", ")))
 
-
 ; STATE: dir, loc
 (def initial-state {:dir :north, :loc [0 0]})
-(def directions [:north :east :south :west])
 
 (defn turn
   "Returns the new state of the program after turning to face left or right"
   [state face]
-  (let [fun (case face \R inc \L dec)
-        idx (mod (fun (.indexOf directions (:dir state)))
-                 (count directions))
-        new-dir (directions idx)]
-    (assoc state :dir new-dir)))
+  (assoc state :dir (case [(:dir state) face]
+                      [:north \L] :west
+                      [:north \R] :east
+                      [:south \L] :east
+                      [:south \R] :west
+                      [:east \L] :north
+                      [:east \R] :south
+                      [:west \L] :south
+                      [:west \R] :north)))
 
 (defn all-steps
   "Returns a collection of all steps taken from an initial state and a step count"
