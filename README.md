@@ -18,3 +18,15 @@ a little better, or at least a bit more interesting.
   * Leveraged `->>` in the `solve` function to avoid having to unwrap parentheses.
   I find the readability improvement is greater than I was expecting.
   * How cool is it that part1 and part2 just differ in the functions passed to `solve`?
+  
+* Day 2
+  * It's a small thing, but using `or (...) button` in the `move` method allowed decoupling the adjacencies of buttons
+  in each keypad from the business logic when a move is not possible. 
+  * Focused on using `reduce` instead of `loop-recur` twice.
+  * Clojure's on-demand data structures made using `reduce` in `calculate-code` simple. The accumulator
+   was a map of the starting digit (whatever button was last pressed) and the digits seen so far.
+
+* Day 3
+  * I like how switching the groupings from rows to columns works in the `by-cols` function using the
+  `interleave` function.
+  
