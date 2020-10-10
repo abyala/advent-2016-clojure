@@ -29,4 +29,6 @@ a little better, or at least a bit more interesting.
 * Day 3
   * I like how switching the groupings from rows to columns works in the `by-cols` function using the
   `interleave` function.
-  
+
+* Day 4
+  * Only special thing is how much I'm using `->` and `->>` now. It definitely reduces eye strain.  

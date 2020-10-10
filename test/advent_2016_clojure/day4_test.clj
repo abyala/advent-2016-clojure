@@ -19,3 +19,6 @@
            (part1 "aaaaa-bbb-z-y-x-123[abxyz]\na-b-c-d-e-f-g-h-987[abcde]\nnot-a-real-room-404[oarel]\ntotally-real-room-200[decoy]"))))
   (testing "Puzzle data"
     (is (= 245102 (part1 PUZZLE_INPUT)))))
+
+(deftest part2-test
+  (is (= 324 (part2 PUZZLE_INPUT))))
