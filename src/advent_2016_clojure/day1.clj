@@ -2,44 +2,73 @@
   (:require [clojure.string :as str]
             [advent-2016-clojure.utils :refer [abs] ]))
 
-(defn parse-move [input]
+(defn parse-move
+  "Parses a single element of form Lxxx or Rxxx, and returns vector of [dir distance]"
+  [input]
   [(first input) (Integer/parseInt (subs input 1))])
 
-(defn parse-input [input]
+(defn parse-input
+  "Parses a complete input of comma-and-space separated moves into a collection"
+  [input]
   (map parse-move (str/split input #", ")))
 
-(def directions [:north :east :south :west])
 
 ; STATE: dir, loc
-(defn turn [state face]
+(def initial-state {:dir :north, :loc [0 0]})
+(def directions [:north :east :south :west])
+
+(defn turn
+  "Returns the new state of the program after turning to face left or right"
+  [state face]
   (let [fun (case face \R inc \L dec)
         idx (mod (fun (.indexOf directions (:dir state)))
                  (count directions))
         new-dir (directions idx)]
     (assoc state :dir new-dir)))
 
-(defn step [state steps]
-  (let [loc (:loc state)]
-    (assoc state :loc (case (:dir state)
-                        :north (update loc 1 #(+ % steps))
-                        :south (update loc 1 #(- % steps))
-                        :east (update loc 0 #(+ % steps))
-                        :west (update loc 0 #(- % steps))))))
+(defn all-steps
+  "Returns a collection of all steps taken from an initial state and a step count"
+  [state steps]
+  (let [loc (:loc state)
+        f (case (:dir state)
+            :north (fn [[x y]] [x (inc y)])
+            :south (fn [[x y]] [x (dec y)])
+            :east (fn [[x y]] [(inc x) y])
+            :west (fn [[x y]] [(dec x) y]))]
+    (drop 1 (reductions (fn [col _] (f col)) loc (range steps)))))
 
-(defn street-distance [loc]
+(defn walk-path
+  "Returns a lazy collection of all steps taken through a collection of moves"
+  ([steps] (walk-path steps initial-state))
+  ([[[face dist] & steps] state]
+   (when (some? face)
+     (let [turned (turn state face)
+           next-steps (all-steps turned dist)
+           next-state (assoc turned :loc (last next-steps))]
+       (lazy-seq (concat next-steps (walk-path steps next-state)))))))
+
+(defn first-repeat
+  "Returns the first element of a collection that appears more than once"
+  [items]
+  (let [answer (reduce (fn [found x]
+                         (if (contains? found x) (reduced x) (conj found x)))
+                       #{}
+                       items)]
+    (when (not= answer (set items)) answer)))
+
+(defn street-distance
+  "Returns the street/Manhattan distance of a vector of integers"
+  [loc]
   (reduce + (map abs loc)))
 
-(defn follow-steps [steps]
-  (reduce (fn [state [face dist]]
-            (-> state
-                (turn face)
-                (step dist)))
-          {:dir :north, :loc [0 0]}
-          steps))
-
-(defn part1 [input]
+(defn solve
+  "Returns the street distance of applying the function f to the path walked by the input"
+  [f input]
   (->> input
        parse-input
-       follow-steps
-       :loc
+       walk-path
+       f
        street-distance))
+
+(defn part1 [input] (solve last input))
+(defn part2 [input] (solve first-repeat input))

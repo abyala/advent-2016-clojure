@@ -2,6 +2,8 @@
   (:require [clojure.test :refer :all]
             [advent-2016-clojure.day1 :refer :all]))
 
+(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day1-data.txt"))
+
 (deftest parse-test
   (testing "Single line"
     (is (= [\R 14]
@@ -25,12 +27,6 @@
       (is (= {:dir :south :loc [3 4]}
              (turn start \L))))))
 
-(deftest step-test
-  (is (= {:dir :north :loc [3 9]}
-         (step {:dir :north :loc [3 4]} 5)))
-  (is (= {:dir :west :loc [-2 4]}
-         (step {:dir :west :loc [3 4]} 5))))
-
 (deftest part1-test
   (testing "Sample inputs"
     (is (= 5
@@ -40,4 +36,10 @@
     (is (= 12
            (part1 "R5, L5, R5, R3"))))
   (testing "Real input"
-    (is (= 252 (part1 (slurp "test\\advent_2016_clojure\\day1-data.txt"))))))
+    (is (= 252 (part1 PUZZLE_INPUT)))))
+
+(deftest part2-test
+  (testing "Sample input"
+    (is (= 4 (part2 "R8, R4, R4, R8"))))
+  (testing "Puzzle input"
+    (is (= 143 (part2 PUZZLE_INPUT)))))
