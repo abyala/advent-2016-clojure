@@ -1,22 +1,25 @@
 (ns advent-2016-clojure.day3
   (:require [clojure.string :as str]))
 
-(defn parse-line [line]
+(defn parse-to-int-seq [input]
   (map #(Integer/parseInt %)
-       (-> line str/trim (str/split #" +"))))
-
-(defn parse-input [input]
-  (->> input
-       str/split-lines
-       (map parse-line)))
+       (-> input str/trim (str/split #"\W+"))))
 
 (defn is-triangle? [sides]
   (let [[small2 largest] (map #(reduce + %)
                               (partition-all 2 (sort sides)))]
     (> small2 largest)))
 
-(defn part1 [input]
+(defn by-rows [int-seq] (partition 3 int-seq))
+(defn by-cols [int-seq]
+  (->> int-seq (partition 3) (apply interleave) (partition 3)))
+
+(defn count-triangles [grouping-fun input]
   (->> input
-       parse-input
+       parse-to-int-seq
+       grouping-fun
        (filter is-triangle?)
        count))
+
+(defn part2 [input]
+  (count-triangles by-cols input))
