@@ -11,9 +11,8 @@
        (map parse-line)))
 
 (defn is-triangle? [sides]
-  (let [[small2 largest] (map #(reduce + %)
-                              (partition-all 2 (sort sides)))]
-    (> small2 largest)))
+  (let [[a b c] (sort sides)]
+    (> (+ a b) c)))
 
 (def by-rows identity)
 (defn by-cols [int-seq]
