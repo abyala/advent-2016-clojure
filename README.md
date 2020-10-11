@@ -31,4 +31,16 @@ a little better, or at least a bit more interesting.
   `interleave` function.
 
 * Day 4
-  * Only special thing is how much I'm using `->` and `->>` now. It definitely reduces eye strain.  
+  * Only special thing is how much I'm using `->` and `->>` now. It definitely reduces eye strain.
+
+* Day 5
+  * From reading online, I see that applying a typehint (`[^String s]`) saves a lot of time by avoiding reflection.
+  * From experimentation, I see that caching the `MessageDigest` and calling `.reset` actually _increased_ the total
+  running time. So this looks less efficient, but it's both faster and thread-safe! 
+  * Originally, one function filtered hashes and concatenated them together, but the `valid-hashes` has a distinct
+  construct makes this easier to reason with.
+  * The `build-password` function looks obscene now, I know, but look at how pretty `part1` and `part2` look! Once
+  again, `reduced` short-circuits the `reduce` function, allowing the safe use of the infinite sequence input.
+  * The `part2` function leverages `merge` applied to two maps, where the right-most version wins. Hence putting the
+  new data as the first argument and the existing map as the allows us to keep the first mapping for each index.
+  * I originally was reducing over a String of `........` instead of a map of `{}`, but the map was more interesting.

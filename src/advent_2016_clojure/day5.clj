@@ -2,25 +2,53 @@
   (:require [clojure.string :as str])
   (:import (java.security MessageDigest)))
 
-(defn md5 [^String s]
+(defn md5
+  "Converts a String to its hex md5"
+  [^String s]
   (->> s
        .getBytes
        (.digest (MessageDigest/getInstance "MD5"))
        (BigInteger. 1)
        (format "%032x")))
 
-(defn is-valid-hash? [s] (str/starts-with? s "00000"))
+(defn is-valid-hash?
+  "Filters for valid hashes (strings that start with 5 zeroes)"
+  [s] (str/starts-with? s "00000"))
 
-(defn next-password-char [s]
-  (when (is-valid-hash? s) (get s 5)))
-
-(defn get-password [door-id]
+(defn valid-hashes
+  "Produces an infinite sequence of valid hashes, given the door-id prefix"
+  [door-id]
   (->> (range)
        (map #(str door-id %))
        (map md5)
-       (keep next-password-char)
-       (take 8)
-       (apply str)))
+       (filter is-valid-hash?)))
 
-(defn part1 [input]
-  (get-password input))
+(defn build-password
+  "Given a function with three parameters (map, position 5, position 6),
+  applies the function to an infinite sequence of valid hashes, until the map
+  has 8 values, at which point it returns the password."
+  [reducing-fun door-id]
+  (reduce #(let [m (reducing-fun %1 (get %2 5) (get %2 6))]
+             (if (>= (count m) 8)
+               (reduced (apply str (vals (sort m))))
+               m))
+          {}
+          (valid-hashes door-id)))
+
+(defn part1
+  "Builds the password by mapping each pos5 character to its index in the map"
+  [input]
+  (build-password
+    (fn [answer p5 _]
+      (merge {(count answer) p5} answer))
+    input))
+
+(defn part2
+  "Builds the password by mapping each pos6 character to the pos5 index, if not
+  already mapped."
+  [input]
+  (build-password
+    (fn [answer p5 p6]
+      (let [p5-int (- (int p5) (int \0))]
+        (if (<= p5-int 7) (merge {p5-int p6} answer) answer)))
+    input))
