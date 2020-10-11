@@ -8,4 +8,5 @@
   (testing "Sample input"
     (is (= "18f47a30" (part1 "abc"))))
   (testing "Puzzle input"
-    (is (= "f77a0e6e" (part1 PUZZLE_INPUT)))))
+    (is (= "f77a0e6e" (part1 PUZZLE_INPUT))))
+  )

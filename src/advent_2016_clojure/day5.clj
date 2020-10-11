@@ -2,23 +2,25 @@
   (:require [clojure.string :as str])
   (:import (java.security MessageDigest)))
 
-(defn md5 [s]
+(defn md5 [^String s]
   (->> s
        .getBytes
        (.digest (MessageDigest/getInstance "MD5"))
        (BigInteger. 1)
        (format "%032x")))
 
-(defn next-password-char [s]
-  (when (str/starts-with? s "00000") (get s 5)))
+(defn is-valid-hash? [s] (str/starts-with? s "00000"))
 
-(defn get-password [length door-id]
+(defn next-password-char [s]
+  (when (is-valid-hash? s) (get s 5)))
+
+(defn get-password [door-id]
   (->> (range)
        (map #(str door-id %))
        (map md5)
        (keep next-password-char)
-       (take length)
+       (take 8)
        (apply str)))
 
 (defn part1 [input]
-  (get-password 8 input))
+  (get-password input))
