@@ -44,3 +44,6 @@ a little better, or at least a bit more interesting.
   * The `part2` function leverages `merge` applied to two maps, where the right-most version wins. Hence putting the
   new data as the first argument and the existing map as the allows us to keep the first mapping for each index.
   * I originally was reducing over a String of `........` instead of a map of `{}`, but the map was more interesting.
+  
+* Day 6
+  * I'm not proud of this one. The problem was uninteresting, so I just did list manipulation in the REPL.  *yawn*

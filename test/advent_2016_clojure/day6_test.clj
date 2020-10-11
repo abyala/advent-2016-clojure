@@ -10,3 +10,9 @@
     (is (= "easter" (part1 TEST_INPUT))))
   (testing "Puzzle input"
     (is (= "gebzfnbt" (part1 PUZZLE_INPUT)))))
+
+(deftest part1-test
+  (testing "Sample input"
+    (is (= "advent" (part2 TEST_INPUT))))
+  (testing "Puzzle input"
+    (is (= "fykjtwyn" (part2 PUZZLE_INPUT)))))
