@@ -47,3 +47,6 @@ a little better, or at least a bit more interesting.
   
 * Day 6
   * I'm not proud of this one. The problem was uninteresting, so I just did list manipulation in the REPL.  *yawn*
+  
+* Day 7
+  * Nothing special

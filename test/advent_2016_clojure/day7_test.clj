@@ -23,3 +23,26 @@
            (part1 "abba[mnop]qrst\nabcd[bddb]xyyx\naaaa[qwer]tyui\nioxxoj[asdfgh]zxcvbn"))))
   (testing "Puzzle input"
     (is (= 110 (part1 PUZZLE_INPUT)))))
+
+(deftest ab-pairs-test
+  (is (= (#{[\a \b]}
+          (ab-pairs "aba"))))
+  (is (= (#{[\z \a] [\z \b]}
+          (ab-pairs "zazbz"))))
+  (is (= (#{}
+          (ab-pairs "abc")))))
+
+(deftest ab-pairs-test
+  (is (= (#{[\b \a]}
+          (ba-pairs "aba"))))
+  (is (= (#{[\a \z] [\b \z]}
+          (ba-pairs "zazbz"))))
+  (is (= (#{}
+          (ba-pairs "abc")))))
+
+(deftest part2-test
+  (testing "Sample input"
+    (is (= 3
+           (part2 "aba[bab]xyz\nxyx[xyx]xyx\naaa[kek]eke\nzazbz[bzb]cdb"))))
+  (testing "Puzzle input"
+    (is (= 242 (part2 PUZZLE_INPUT)))))

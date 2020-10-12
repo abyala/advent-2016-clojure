@@ -1,8 +1,8 @@
 (ns advent-2016-clojure.day7
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.set :as set]))
 
-
-(defn is-abba? [word ]
+(defn is-abba? [word]
   (loop [s word]
     (when (>= (count s) 4)
       (let [[a b c d] (take 4 s)]
@@ -25,8 +25,21 @@
     (and (some is-abba? seqs)
          (not-any? is-abba? hyper))))
 
-(defn part1 [input]
-  (->> input
-      str/split-lines
-      (filter supports-tls?)
-      count))
+(defn ab-pairs [word]
+  (set (keep #(let [[a b c] (subs word %)]
+                (when (and (= a c) (not= a b)) [a b]))
+             (range 0 (- (count word) 2)))))
+
+(defn ba-pairs [word]
+  (->> word
+       ab-pairs
+       (map (fn [[a b]] [b a]))))
+
+(defn supports-ssl? [input]
+  (let [{seqs :seqs hyper :hyper} (address-components input)]
+    ((complement empty?) (set/intersection (reduce into #{} (map ab-pairs seqs))
+                                           (reduce into #{} (map ba-pairs hyper))))))
+
+(defn solve [f input] (->> input str/split-lines (filter f) count))
+(defn part1 [input] (solve supports-tls? input))
+(defn part2 [input] (solve supports-ssl? input))
