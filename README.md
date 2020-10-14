@@ -50,3 +50,9 @@ a little better, or at least a bit more interesting.
   
 * Day 7
   * Nothing special
+
+* Day 8
+  * I suppose the only thing I learned was the `run!` command, which is like Kotlin's `forEach` function.
+  I use it here to get side effects (`println`).
+  * I couldn't find a nice way to merge `rotate-col` and `rotate-row`, but I'm rather pleased at how the 
+  `parse-instruction` function iterates over potential regex patterns, returning a common partial function.
