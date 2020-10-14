@@ -14,3 +14,6 @@
     (is (= 6 (part1 "rect 3x2\nrotate column x=1 by 1\nrotate row y=0 by 4\nrotate column x=1 by 1"))))
   (testing "Puzzle data"
     (is (= 121 (part1 PUZZLE_INPUT)))))
+
+; Answer: RURUCEOEIL
+(part2 PUZZLE_INPUT)

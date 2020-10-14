@@ -45,3 +45,25 @@
        (run-program 50 6)
        :pixels
        count))
+
+(defn print-row [row]
+  (->> row sort (map second) (apply str)))
+
+(defn display-screen [screen]
+  (let [all-blanks (apply merge (for [x (range (:width screen))
+                                      y (range (:height screen))]
+                                  {[x y] \space}))
+        actual-data (apply merge (map (fn [x] {x \#})  (:pixels screen)))]
+    (->> actual-data
+         (merge all-blanks)
+         (group-by (comp second first))
+         (sort)
+         (map second)
+         (map print-row)
+         (run! println))))
+
+(defn part2 [input]
+  (->> input
+       str/split-lines
+       (run-program 50 6)
+       display-screen))
