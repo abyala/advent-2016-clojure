@@ -2,16 +2,7 @@
   (:require [clojure.test :refer :all]
             [advent-2016-clojure.day9 :refer :all]))
 
-;(def TEST_INPUT '("rect 3x2" "rotate column x=1 by 1" "rotate row y=0 by 4" "rotate column x=1 by 1"))
 (def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day9-data.txt"))
-
-(deftest process-datalink-test
-  (is (= "ADVENT" (decompress "ADVENT")))
-  (is (= "ABBBBBC" (decompress "A(1x5)BC")))
-  (is (= "XYZXYZXYZ" (decompress "(3x3)XYZ")))
-  (is (= "ABCBCDEFEFG" (decompress "A(2x2)BCD(2x2)EFG")))
-  (is (= "(1x3)A" (decompress "(6x1)(1x3)A")))
-  (is (= "X(3x3)ABC(3x3)ABCY" (decompress "X(8x2)(3x3)ABCY"))))
 
 (deftest part1-test
   (testing "Test input"
@@ -24,3 +15,10 @@
     )
   (testing "Puzzle input"
     (is (= 70186 (part1 PUZZLE_INPUT)))))
+
+(deftest part2-test
+  (testing "Test input"
+    (is (= 9 (part2 "(3x3)XYZ")))
+    (is (= 20 (part2 "X(8x2)(3x3)ABCY")))
+    (is (= 241920 (part2 "(27x12)(20x12)(13x14)(7x10)(1x12)A")))
+    (is (= 445 (part2 "(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN")))))
