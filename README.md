@@ -56,3 +56,11 @@ a little better, or at least a bit more interesting.
   I use it here to get side effects (`println`).
   * I couldn't find a nice way to merge `rotate-col` and `rotate-row`, but I'm rather pleased at how the 
   `parse-instruction` function iterates over potential regex patterns, returning a common partial function.
+
+* Day 9
+  * I loved this puzzle and how incredibly concise the answer is!
+  * The fact that the `decompress` function takes itself in as a request parameter, and that the recurseive call
+  calls itself with itself again was a little trippy.  I kept trying to find a way do do this with partial functions,
+  such that `part1` would only have to pass in the simple `count` function, but I don't think that can work due to the
+  difference in arity between both functions.  The recursive call has to take itself in to avoid unraveling the
+  argument list. 
