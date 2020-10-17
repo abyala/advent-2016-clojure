@@ -2,7 +2,7 @@
   (:require [clojure.string :as str]))
 
 (defn remove-chips "Takes away all chips from a bot by name" [name state]
-  (update state :bots #(assoc % name '())))
+  (update state :bots #(dissoc % name)))
 
 (defn give-chip "Gives a chip to either a \"bot\" or \"output\" by name." [chip type-name name state]
   (update state
@@ -42,15 +42,16 @@
     (reduce initialize-state-with-line {} lines)))
 
 (defn part1 [input chip1 chip2]
-  (loop [state (initialize-input input)]
-    (let [{[bot chips] :comparison s :state} (move-if-possible state)]
-      (if (= (sort (list chip1 chip2))
-             (sort chips))
-        bot
-        (recur s)))))
+  (let [target-chips (sort (list chip1 chip2))]
+    (loop [state (initialize-input input)]
+      (let [{[bot chips] :comparison s :state} (move-if-possible state)]
+        (if (= target-chips (sort chips))
+          bot
+          (recur s))))))
 
 (defn part2 [input]
-  (loop [state (initialize-input input)]
-    (if (every? #(contains? (state :outputs) %) '(0 1 2))
-      (apply * (map #(first ((state :outputs) %)) '(0 1 2)))
-      (recur ((move-if-possible state) :state)))))
+  (let [target-outputs '(0 1 2)]
+    (loop [state (initialize-input input)]
+      (if (every? #(contains? (state :outputs) %) target-outputs)
+        (apply * (map #(first ((state :outputs) %)) target-outputs))
+        (recur ((move-if-possible state) :state))))))
