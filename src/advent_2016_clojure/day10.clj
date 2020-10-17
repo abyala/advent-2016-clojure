@@ -1,9 +1,6 @@
 (ns advent-2016-clojure.day10
   (:require [clojure.string :as str]))
 
-(defn initial-state "Initializes the program state before applying any lines" [lines]
-  {:bots {} :outputs {} :algs {}})
-
 (defn remove-chips "Takes away all chips from a bot by name" [name state]
   (update state :bots #(assoc % name '())))
 
@@ -42,7 +39,7 @@
 (defn initialize-input "Creates a new state and applies it to all lines in the input."
   [input]
   (let [lines (str/split-lines input)]
-    (reduce initialize-state-with-line (initial-state lines) lines)))
+    (reduce initialize-state-with-line {} lines)))
 
 (defn part1 [input chip1 chip2]
   (loop [state (initialize-input input)]

@@ -71,4 +71,8 @@ a little better, or at least a bit more interesting.
   * I did consider attempting this with core.async, and might try that later, but it wasn't necessary.
   * Right at the end, I realized I didn't need to initialize my bots.  Calling `(cons 1 '())` is equivalent
   to `(cons 1 nil)`, so I didn't need to map all possible bot values to `'()` or worry about lookups with default
-  values. Very nice, Clojure! 
+  values. Very nice, Clojure!
+  * Get this - I don't need to initialize _anything!_ I removed the `:bots`, `:algs`, and `:outputs` initial mappings
+  to empty maps, and it all works.  I can even change `initialize-input` to start with `nil` instead of `{}`! 
+  This actually works, but ewww!
+  
