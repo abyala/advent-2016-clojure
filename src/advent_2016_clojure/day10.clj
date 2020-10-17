@@ -1,20 +1,8 @@
 (ns advent-2016-clojure.day10
   (:require [clojure.string :as str]))
 
-(defn max-bot "Returns the largest bot ID in the data set" [lines]
-  (->> lines
-       (mapcat (fn [s] (re-seq #"bot (\d+)" s)))
-       (map second)
-       (map #(Integer/parseInt %))
-       (apply max)))
-
-(defn init-bots "Creates a map of all possible bots to an empty list" [max-bot]
-  (->> max-bot inc range
-       (map #(vector % '()))
-       (into {})))
-
 (defn initial-state "Initializes the program state before applying any lines" [lines]
-  {:bots (-> lines max-bot init-bots) :outputs {} :algs {}})
+  {:bots {} :outputs {} :algs {}})
 
 (defn remove-chips "Takes away all chips from a bot by name" [name state]
   (update state :bots #(assoc % name '())))
