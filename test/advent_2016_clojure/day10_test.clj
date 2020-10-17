@@ -7,7 +7,13 @@
 
 (deftest part1-test
   (testing "Test input"
-    (is (= 2 (part1 TEST_INPUT 2 5))))
-    (is (= 2 (part1 TEST_INPUT 5 2)))
+    (is (= 2 (part1 TEST_INPUT 2 5)))
+    (is (= 2 (part1 TEST_INPUT 5 2))))
   (testing "Puzzle input"
     (is (= 56 (part1 PUZZLE_INPUT 61 17)))))
+
+(deftest part2-test
+  (testing "Test input"
+    (is (= 30 (part2 TEST_INPUT))))
+  (testing "Puzzle input"
+    (is (= 7847 (part2 PUZZLE_INPUT)))))

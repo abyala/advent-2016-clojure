@@ -64,3 +64,8 @@ a little better, or at least a bit more interesting.
   such that `part1` would only have to pass in the simple `count` function, but I don't think that can work due to the
   difference in arity between both functions.  The recursive call has to take itself in to avoid unraveling the
   argument list. 
+  
+* Day 10
+  * Nothing very complex, but it was a fun lesson anyway.
+  * I'm starting to make more use of `if-let` and `when-let`, as well as `keep` instead of `(map (filter (...)))`.
+  * I did consider attempting this with core.async, and might try that later, but it wasn't necessary.
