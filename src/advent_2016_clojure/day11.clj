@@ -138,3 +138,12 @@
 
 (defn part1 [input]
   (-> input initialize-state steps-to-move-up))
+
+(defn part2 [input]
+  (->> input
+       initialize-state
+       (add-to-floor (list {:type :chip :element "elerium"}
+                           {:type :generator :element "elerium"}
+                           {:type :chip :element "dilithium"}
+                           {:type :generator :element "dilithium"}) 1)
+       steps-to-move-up))

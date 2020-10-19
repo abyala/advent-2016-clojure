@@ -127,3 +127,7 @@
     (is (= 11 (part1 TEST_INPUT))))
   (testing "Puzzle data"
     (is (= 33 (part1 PUZZLE_INPUT)))))
+
+(deftest part2-test
+  (testing "Puzzle data"
+    (is (= 57 (part2 PUZZLE_INPUT)))))
