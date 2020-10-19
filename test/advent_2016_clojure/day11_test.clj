@@ -5,6 +5,7 @@
 (def hydrogen-chip {:type :chip :element "hydrogen"})
 (def lithium-chip {:type :chip :element "lithium"})
 (def hydrogen-gen {:type :generator :element "hydrogen"})
+(def lithium-gen {:type :generator :element "lithium"})
 (def TEST_INPUT "The first floor contains a hydrogen-compatible microchip and a lithium-compatible microchip.\nThe second floor contains a hydrogen generator.\nThe third floor contains a lithium generator.\nThe fourth floor contains nothing relevant.")
 (def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day11-data.txt"))
 
@@ -77,8 +78,7 @@
   (is (= {:elevator 1 :floors {1 (list lithium-chip hydrogen-chip hydrogen-gen)}}
          (add-to-floor (list hydrogen-chip lithium-chip) 1 {:elevator 1 :floors {1 (list hydrogen-gen)}})))
   (is (= {:elevator 1 :floors {1 (list lithium-chip) 2 (list hydrogen-chip)}}
-         (add-to-floor (list lithium-chip) 1 {:elevator 1 :floors {2 (list hydrogen-chip)}})))
-  )
+         (add-to-floor (list lithium-chip) 1 {:elevator 1 :floors {2 (list hydrogen-chip)}}))))
 
 (deftest move-elevator-test
   (is (= {:elevator 2 :floors {1 (list hydrogen-chip)}}
@@ -101,6 +101,21 @@
                {:elevator 3 :floors {3 (list hydrogen-chip) 2 ()}})
          (possible-next-states {:elevator 2 :floors {2 (list hydrogen-chip)}}))))
 
+(deftest state-summary-test
+  (is (= {:elevator 1 :elements (list {:chip 1 :generator 2} {:chip 1 :generator 2})}
+        (state-summary {:elevator 1 :floors {1 (list hydrogen-chip lithium-chip)
+                                             2 (list hydrogen-gen lithium-gen)}})))
+  (is (= {:elevator 1 :elements (list {:chip 1 :generator 2} {:chip 1 :generator 3})}
+         (state-summary {:elevator 1 :floors {1 (list hydrogen-chip lithium-chip)
+                                              2 (list hydrogen-gen)
+                                              3 (list lithium-gen)}})))
+  (is (= (state-summary {:elevator 1 :floors {1 (list hydrogen-chip lithium-chip)
+                                              2 (list hydrogen-gen)
+                                              3 (list lithium-gen)}})
+         (state-summary {:elevator 1 :floors {1 (list hydrogen-chip lithium-chip)
+                                              2 (list lithium-gen)
+                                              3 (list hydrogen-gen)}}))))
+
 (deftest parse-line-test
   (is (= () (parse-line "The first floor contains nothing relevant.")))
   (is (= (list hydrogen-chip) (parse-line "The first floor contains a hydrogen-compatible microchip.")))
@@ -110,6 +125,5 @@
 (deftest part1-test
   (testing "Sample data"
     (is (= 11 (part1 TEST_INPUT))))
-  ; This test doesn't work yet... too slow.
-  #_(testing "Puzzle data"
-    (is (= -1 (part1 PUZZLE_INPUT)))))
+  (testing "Puzzle data"
+    (is (= 33 (part1 PUZZLE_INPUT)))))
