@@ -75,4 +75,22 @@ a little better, or at least a bit more interesting.
   * Get this - I don't need to initialize _anything!_ I removed the `:bots`, `:algs`, and `:outputs` initial mappings
   to empty maps, and it all works.  I can even change `initialize-input` to start with `nil` instead of `{}`! 
   This actually works, but ewww!
+
+* Day 11
+  * This one was tough for a few reasons.
+  * First, I changes how I wanted to represent the state. Eventually, I settled on 
+  `{:elevator n, :floors { floor# ({:type t :element e})}}` made sense to help with choosing possible moves
+  and to validate their validity with `safe-state?`.
+  * To handle multi-field comparison of maps, I used the `compare` function with vectors of fields. You can see this
+  in `possible-pairs` and `state-summary`.
+  * I used `as->` when needing to mix and match `->` and `->>`.  Usually, `->` works on elements and `->>` works on
+  collections; the fact that I'm using `as->` suggests that perhaps I should make separate functions.
+  * The hardest part by far was making `steps-to-move-up` efficient. I realized that states need not be revisited if
+  they have the same relationships between chips and generators, but only differ by element. I maintained two separate
+  sets, one for available candidates and another for summaries (maps of floor-of-chip and floor-of-generator) to avoid
+  duplicates.
+  * Now that I think of it, I could possible rewrite this to ONLY deal with summaries. Knowing the elements could be
+  helpful if this were a "real" project, but it's not.  Maybe this is an exercise for later in the week.
+  * The `re-seq` function is awesome, returning all possible matches for a regex against a string. Super useful.
+  * My consolation for working for so long on part 1 was that part 2 was a breeze.
   

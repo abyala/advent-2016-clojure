@@ -85,7 +85,7 @@
   {:elevator (state :elevator)
    :elements (->> state
                   :floors
-                  (map (fn [[num items]] (map (fn [item] {:element     (:element item)
+                  (map (fn [[num items]] (map (fn [item] {:element (:element item)
                                                           (:type item) num})
                                               items)))
                   (apply concat)
@@ -93,7 +93,8 @@
                   vals
                   (map #(apply merge %))
                   (map #(dissoc % :element))
-                  (sort #(compare [(:chip %1) (:generator %1)] [(:chip %2) (:generator %2)])))})
+                  (sort #(compare [(:chip %1) (:generator %1)]
+                                  [(:chip %2) (:generator %2)])))})
 
 (defn steps-to-move-up [state]
   ; Candidates (sort by distance)
