@@ -1,4 +1,4 @@
-# Advent of Code 2017
+# Advent of Code 2016
 
 As part of my learning Clojure, I've moved on to the [2016 Advent of Code](https://adventofcode.com/2016/) problems. 
 I'm actually working on this _after_ spending time on 2017, so hopefully this code will be either
