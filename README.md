@@ -94,3 +94,17 @@ a little better, or at least a bit more interesting.
   * The `re-seq` function is awesome, returning all possible matches for a regex against a string. Super useful.
   * My consolation for working for so long on part 1 was that part 2 was a breeze.
   
+* Day 11 (rewrite)
+  * Well I rewrote the program, this time with the state being `{:elevator n, :elements ({:chip x :generator y})`.
+  * The new data format made it easy to make trivial functions like `floors-with-generators` and 
+  `floors-with-detached-chips`, which composed beautifully into `state-state?`. Even `final-state?` looks simple now.
+  * I did have to use `keep-indexed` and `map-indexed` to break each element into its constituent pieces again, so I
+  suppose that's the trade-off of looking at the data in two different ways.
+  * New for me this time was `assoc-in`, which allows changing a value in a map, given a vector of its access path. The
+  `move-item-to-floor` was very nice in that I just changed the floor of the `:chip` or `:generator` without doing the 
+  remove-and-append algorithm from my original design. This also allowed for a nice `reduce` in the `move-items`
+  function.
+  * The `solve` function is still a bit hairy, mostly because it manages composing and decomposing the `candidates` map,
+  since I need that sorted by `distance` without wanting that to be part of the state itself. But other than that,
+  it's a fairly simple solution.   
+  * *End result:* The running time dropped in half, from 5.4 seconds to 2.7 seconds. This meets my expectations.

@@ -120,8 +120,7 @@
 
 (defn element-of-type [t e] {:type t :element e})
 (defn parse-line [line]
-  (let [line (first (str/split-lines line))
-        chips (when-let [matches (re-seq #"(\w+)-compatible microchip" line)]
+  (let [chips (when-let [matches (re-seq #"(\w+)-compatible microchip" line)]
                 (map #(element-of-type :chip (second %)) matches))
         gens (when-let [matches (re-seq #"(\w+) generator" line)]
                (map #(element-of-type :generator (second %)) matches))]
