@@ -108,3 +108,7 @@ a little better, or at least a bit more interesting.
   since I need that sorted by `distance` without wanting that to be part of the state itself. But other than that,
   it's a fairly simple solution.   
   * *End result:* The running time dropped in half, from 5.4 seconds to 2.7 seconds. This meets my expectations.
+
+* Day 12
+  * Nothing too interesting. I feel like I've done this before, but in fairness I did years 2017-2020 before 2020.
+  * Why do I get the sinking feeling that I'll be extending this little computer in future problems?
