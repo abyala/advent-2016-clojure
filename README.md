@@ -112,3 +112,6 @@ a little better, or at least a bit more interesting.
 * Day 12
   * Nothing too interesting. I feel like I've done this before, but in fairness I did years 2017-2020 before 2020.
   * Why do I get the sinking feeling that I'll be extending this little computer in future problems?
+
+* Day 13
+  * Meh.

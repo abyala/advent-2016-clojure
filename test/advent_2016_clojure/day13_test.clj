@@ -2,6 +2,8 @@
   (:require [clojure.test :refer :all]
             [advent-2016-clojure.day13 :refer :all]))
 
+(def PUZZLE_INPUT 1364)
+
 (deftest count-binary-ones-test
   (is (= 0 (count-binary-ones 0)))
   (is (= 1 (count-binary-ones 1)))
@@ -27,5 +29,7 @@
   (is (= 3 (a-star-estimate 2 [5 6] [4 6]))))
 
 (deftest part1-test
-  (is (= 11 (part1 10)))
-  (is (= 86 (part1 1364))))
+  (is (= 86 (part1 PUZZLE_INPUT))))
+
+(deftest part2-test
+  (is (= 127 (part2 PUZZLE_INPUT))))

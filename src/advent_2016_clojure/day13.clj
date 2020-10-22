@@ -44,7 +44,7 @@
           (let [next-options (->> point
                                   (walkable-neighbors fav)
                                   (filter #(not (contains? seen %)))
-                                  (map #(vector (inc dist) % )))]
+                                  (map #(vector (inc dist) %)))]
             (recur (-> options
                        (disj next-point)
                        ((partial apply conj) next-options))
@@ -52,3 +52,25 @@
 
 (defn part1 [favorite-number]
   (solve favorite-number [31 39]))
+
+(defn part2 [favorite-number]
+  ; I plan to store [distance-to [x y]]
+  (let [option-comparator (fn [[d [x y]]] [d x y])
+        initial-option [0 [1 1]]]
+    (loop [options (sorted-set-by #(compare (option-comparator %1)
+                                            (option-comparator %2))
+                                  initial-option)
+           seen #{(second initial-option)}]
+      (if (empty? options)
+        (count seen)
+        (let [[dist point] (first options)
+              next-seen (conj seen point)
+              next-options (->> point
+                                (walkable-neighbors favorite-number)
+                                (keep #(when (and (not (contains? next-seen %))
+                                                  (< dist 50))
+                                         (vector (inc dist) %))))]
+          (recur (-> options
+                     (disj [dist point])
+                     ((partial apply conj) next-options))
+                 next-seen))))))
