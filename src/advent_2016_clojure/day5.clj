@@ -1,15 +1,7 @@
 (ns advent-2016-clojure.day5
-  (:require [clojure.string :as str])
-  (:import (java.security MessageDigest)))
+  (:require [clojure.string :as str]
+            [advent-2016-clojure.utils :as utils :only [md5]]))
 
-(defn md5
-  "Converts a String to its hex md5"
-  [^String s]
-  (->> s
-       .getBytes
-       (.digest (MessageDigest/getInstance "MD5"))
-       (BigInteger. 1)
-       (format "%032x")))
 
 (defn is-valid-hash?
   "Filters for valid hashes (strings that start with 5 zeroes)"
@@ -20,7 +12,7 @@
   [door-id]
   (->> (range)
        (map #(str door-id %))
-       (map md5)
+       (map utils/md5)
        (filter is-valid-hash?)))
 
 (defn build-password
