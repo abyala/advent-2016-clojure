@@ -115,3 +115,11 @@ a little better, or at least a bit more interesting.
 
 * Day 13
   * Meh.
+  
+* Day 15
+  * First fun part was the `cycle` function within `create-disk` which is the easiest way to create a repeating
+  sequence, in this case of a closed range.
+  * The `seq-of-offset-disks` uses the `interleave` function, which takes takes the first of each sequence, 
+  then the second of each, etc.  I used the `apply interleave` since it is passed a sequence of sequences, and then
+  used `partition` by the number of sequences, such that it generated a tuple of the `nth` value from each
+  sequence.  Pair that via `map-indexed` to the index to get the result.  
