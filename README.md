@@ -123,3 +123,8 @@ a little better, or at least a bit more interesting.
   then the second of each, etc.  I used the `apply interleave` since it is passed a sequence of sequences, and then
   used `partition` by the number of sequences, such that it generated a tuple of the `nth` value from each
   sequence.  Pair that via `map-indexed` to the index to get the result.  
+  
+* Day 16
+  * Pretty standard problem. Part 2 takes 28 seconds to run, so I'll bet there's some clever algorithm to find that
+  makes it run much faster. I might think about it tonight, but my goal is Clojure experience, not necessarily
+  super-clever algorithms.
