@@ -135,3 +135,6 @@ a little better, or at least a bit more interesting.
   But when I got to part2 and saw I could reuse the `paths-to-vault` function, sorting didn't provide any value anymore.
   * Odd finding -- when the `paths-to-vault` combines the next moves with the `others`, calling `concat` is roughly
   twice as slow as `into others`.
+  * Ok, this may be dumb, but the predicate `(<= 0 x 3)` is about as Clojure-y as you get.
+  * `zipmap` is a cute function.  I use to to create a map of directions to values, given a vector of keys
+   `[:up :down :left :right]` and a sequence of the corresponding values.

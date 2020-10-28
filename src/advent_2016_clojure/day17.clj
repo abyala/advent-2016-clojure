@@ -20,8 +20,7 @@
     :right [(inc x) y]))
 
 (defn on-map? [[x y]]
-  (and (>= x 0) (<= x 3)
-       (>= y 0) (<= y 3)))
+  (and (<= 0 x 3) (<= 0 y 3)))
 
 (defn append-to-path [path dir]
   (str path (case dir :up \U :down \D :left \L :right \R)))
