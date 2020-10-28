@@ -1,6 +1,6 @@
-(ns advent-2016-clojure.day5-test
+(ns advent-2016-clojure.day05-test
   (:require [clojure.test :refer :all]
-            [advent-2016-clojure.day5 :refer :all]))
+            [advent-2016-clojure.day05 :refer :all]))
 
 (def TEST_INPUT "abc")
 (def PUZZLE_INPUT "cxdnnyjw")

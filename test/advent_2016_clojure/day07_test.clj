@@ -1,8 +1,8 @@
-(ns advent-2016-clojure.day7-test
+(ns advent-2016-clojure.day07-test
   (:require [clojure.test :refer :all]
-            [advent-2016-clojure.day7 :refer :all]))
+            [advent-2016-clojure.day07 :refer :all]))
 
-(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day7-data.txt"))
+(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day07-data.txt"))
 
 (deftest is-abba-test
   (is (is-abba? "abba"))

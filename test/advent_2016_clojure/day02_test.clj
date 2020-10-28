@@ -1,9 +1,9 @@
-(ns advent-2016-clojure.day2-test
+(ns advent-2016-clojure.day02-test
   (:require [clojure.test :refer :all]
-            [advent-2016-clojure.day2 :refer :all]))
+            [advent-2016-clojure.day02 :refer :all]))
 
 (def TEST_INPUT "ULL\nRRDDD\nLURDL\nUUUUD")
-(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day2-data.txt"))
+(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day02-data.txt"))
 
 (deftest move-test
   (let [directions '(\U \D \L \R)]

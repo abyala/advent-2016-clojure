@@ -1,4 +1,4 @@
-(ns advent-2016-clojure.day1
+(ns advent-2016-clojure.day01
   (:require [clojure.string :as str]
             [advent-2016-clojure.utils :refer [abs]]))
 

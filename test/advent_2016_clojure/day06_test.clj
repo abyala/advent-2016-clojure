@@ -1,9 +1,9 @@
-(ns advent-2016-clojure.day6-test
+(ns advent-2016-clojure.day06-test
   (:require [clojure.test :refer :all]
-            [advent-2016-clojure.day6 :refer :all]))
+            [advent-2016-clojure.day06 :refer :all]))
 
 (def TEST_INPUT "eedadn\ndrvtee\neandsr\nraavrd\natevrs\ntsrnev\nsdttsa\nrasrtv\nnssdts\nntnada\nsvetve\ntesnvt\nvntsnd\nvrdear\ndvrsen\nenarar")
-(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day6-data.txt"))
+(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day06-data.txt"))
 
 (deftest part1-test
   (testing "Sample input"

@@ -1,4 +1,4 @@
-(ns advent-2016-clojure.day5
+(ns advent-2016-clojure.day05
   (:require [clojure.string :as str]
             [advent-2016-clojure.utils :as utils :only [md5]]))
 

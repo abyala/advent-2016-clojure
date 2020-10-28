@@ -1,8 +1,8 @@
-(ns advent-2016-clojure.day3-test
+(ns advent-2016-clojure.day03-test
   (:require [clojure.test :refer :all]
-            [advent-2016-clojure.day3 :refer :all]))
+            [advent-2016-clojure.day03 :refer :all]))
 
-(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day3-data.txt"))
+(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day03-data.txt"))
 
 (deftest is-triangle-test
   (is (true? (is-triangle? '(3 4 5))))

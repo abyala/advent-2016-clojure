@@ -1,8 +1,8 @@
-(ns advent-2016-clojure.day1-test
+(ns advent-2016-clojure.day01-test
   (:require [clojure.test :refer :all]
-            [advent-2016-clojure.day1 :refer :all]))
+            [advent-2016-clojure.day01 :refer :all]))
 
-(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day1-data.txt"))
+(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day01-data.txt"))
 
 (deftest parse-test
   (testing "Single line"

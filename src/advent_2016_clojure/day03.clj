@@ -1,4 +1,4 @@
-(ns advent-2016-clojure.day3
+(ns advent-2016-clojure.day03
   (:require [clojure.string :as str]))
 
 (defn parse-line [line]

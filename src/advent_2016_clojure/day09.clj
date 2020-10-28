@@ -1,4 +1,4 @@
-(ns advent-2016-clojure.day9)
+(ns advent-2016-clojure.day09)
 
 (defn decompress
   "Takes in a function to apply to the matching compressed characters of the input string."

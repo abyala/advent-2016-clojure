@@ -1,4 +1,4 @@
-(ns advent-2016-clojure.day6
+(ns advent-2016-clojure.day06
   (:require [clojure.string :as str]))
 
 (defn most-common-per-index [first-or-last words]

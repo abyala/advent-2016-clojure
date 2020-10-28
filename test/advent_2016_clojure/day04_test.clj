@@ -1,8 +1,8 @@
-(ns advent-2016-clojure.day4-test
+(ns advent-2016-clojure.day04-test
   (:require [clojure.test :refer :all]
-            [advent-2016-clojure.day4 :refer :all]))
+            [advent-2016-clojure.day04 :refer :all]))
 
-(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day4-data.txt"))
+(def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day04-data.txt"))
 
 (deftest parse-line-test
   (is (= {:name "a-b-c-d-e-f-g-h" :id 987 :checksum "abcde"}
