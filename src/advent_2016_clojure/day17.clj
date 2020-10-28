@@ -1,6 +1,5 @@
 (ns advent-2016-clojure.day17
-  (:require [clojure.string :as str]
-            [advent-2016-clojure.utils :as utils :only [md5]]
+  (:require [advent-2016-clojure.utils :as utils :only [md5]]
             [advent-2016-clojure.point :as point]))
 
 (def target [3 0])
@@ -33,16 +32,24 @@
        (map #(hash-map :dir % :point (move-dir point %) :path (append-to-path path %)))
        (filter #(on-map? (:point %)))))
 
-(defn a-star-estimate [{path :path point :point}]
-  (+ (count path)
-     (point/distance point target)))
+(defn paths-to-vault [passcode]
+  (loop [options '({:path "" :point [0 3]})
+         found ()]
+    (let [[{path :path point :point} & others] options]
+      (if (nil? point)
+        found
+        (if (= point target)
+          (recur others (cons path found))
+          (recur (into others (next-moves passcode path point))
+                 found))))))
 
 (defn part1 [passcode]
-  (loop [options #{{:path "" :point [0 3]}}]
-    (let [option (first (sort-by #(a-star-estimate %) options))
-          {path :path point :point} option]
-      (if (= point target)
-        path
-        (recur (-> options
-                   (disj option)
-                   ((partial apply merge) (next-moves passcode path point))))))))
+  (->> (paths-to-vault passcode)
+       (sort-by count)
+       first))
+
+(defn part2 [passcode]
+  (->> (paths-to-vault passcode)
+       (sort-by count)
+       last
+       count))

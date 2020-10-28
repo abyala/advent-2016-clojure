@@ -128,3 +128,10 @@ a little better, or at least a bit more interesting.
   * Pretty standard problem. Part 2 takes 28 seconds to run, so I'll bet there's some clever algorithm to find that
   makes it run much faster. I might think about it tonight, but my goal is Clojure experience, not necessarily
   super-clever algorithms.
+  
+* Day 17
+  * Standard path algorithm.
+  * My original solution for part1 made use of an a-star estimate, to always choose the shortest estimate to the end.
+  But when I got to part2 and saw I could reuse the `paths-to-vault` function, sorting didn't provide any value anymore.
+  * Odd finding -- when the `paths-to-vault` combines the next moves with the `others`, calling `concat` is roughly
+  twice as slow as `into others`.

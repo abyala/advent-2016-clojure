@@ -42,11 +42,6 @@
   (is (= ()
          (next-moves "hijkl" "DR" [1 2]))))
 
-(deftest a-star-estimate-test
-  (is (= 6 (a-star-estimate {:path "" :point [0 3]})))
-  (is (= 8 (a-star-estimate {:path "DU" :point [0 3]})))
-  (is (= 0 (a-star-estimate {:path "" :point [3 0]}))))
-
 (deftest part1-test
   (testing "Test data"
     (is (= "DDRRRD" (part1 "ihgpwlah")))
@@ -54,3 +49,11 @@
     (is (= "DRURDRUDDLLDLUURRDULRLDUUDDDRR" (part1 "ulqzkmiv"))))
   (testing "Puzzle data"
     (is (= "DRDRULRDRD" (part1 PUZZLE_INPUT)))))
+
+(deftest part2-test
+  (testing "Test data"
+    (is (= 370 (part2 "ihgpwlah")))
+    (is (= 492 (part2 "kglvqrro")))
+    (is (= 830 (part2 "ulqzkmiv"))))
+  (testing "Puzzle data"
+    (is (= 384 (part2 PUZZLE_INPUT)))))
