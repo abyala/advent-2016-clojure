@@ -142,3 +142,11 @@ a little better, or at least a bit more interesting.
 * Day 18
   * Not much challenge here.  Maybe this causes a memory constraint if the program didn't use lazy sequences or used
   normal recursion?  This was very straightforward.
+  * Well then I looked at 
+  [Todd Ginsberg's solution](https://github.com/tginsberg/advent-2016-kotlin/blob/master/src/main/kotlin/com/ginsberg/advent2016/Day18.kt)
+   in Kotlin, and made me want to try another implementation where I kept working with Strings instead of converting
+   the original input to a vector of booleans. For whatever reason, the running time jumped from 3 seconds to 15. I'm
+   not sure if my implementation is off, or if Strings are just that much less efficient than boolean vectors, or if
+   Clojure (or Java) is just particularly less efficient at calling `String.charAt`. From what I'm seeing, Clojure's
+   RT code does end up calling `String.charAt` after doing a lot of type checks, such as ensuring the variable is
+   indexable and eventually a String, the index is numeric, etc. It's a curious finding, whatever it is.
