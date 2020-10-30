@@ -2,11 +2,10 @@
 
 (def SAFE \.)
 (def TRAP \^)
+
 (defn next-line [line]
   (let [s (str SAFE line SAFE)]
-    (->> line
-         count
-         range
+    (->> (range (count line))
          (map #(if (= (get s %) (get s (+ % 2))) SAFE TRAP))
          (apply str))))
 
@@ -14,8 +13,7 @@
   (lazy-seq (cons line (trap-sequence (next-line line)))))
 
 (defn num-safe-tiles [line num-rows]
-  (->> line
-       trap-sequence
+  (->> (trap-sequence line)
        (take num-rows)
        (map #(count (filter (partial = SAFE) %)))
        (apply +)))

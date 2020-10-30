@@ -13,9 +13,7 @@
   (lazy-seq (cons line (trap-sequence (next-line line)))))
 
 (defn num-safe-tiles [input num-rows]
-  (->> input
-       parse-traps
-       trap-sequence
+  (->> (trap-sequence (parse-traps input))
        (take num-rows)
        (map #(count (filter false? %)))
        (apply +)))
