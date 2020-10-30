@@ -138,3 +138,7 @@ a little better, or at least a bit more interesting.
   * Ok, this may be dumb, but the predicate `(<= 0 x 3)` is about as Clojure-y as you get.
   * `zipmap` is a cute function.  I use to to create a map of directions to values, given a vector of keys
    `[:up :down :left :right]` and a sequence of the corresponding values.
+   
+* Day 18
+  * Not much challenge here.  Maybe this causes a memory constraint if the program didn't use lazy sequences or used
+  normal recursion?  This was very straightforward.

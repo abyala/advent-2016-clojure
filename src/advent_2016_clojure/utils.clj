@@ -12,3 +12,9 @@
        (.digest (MessageDigest/getInstance "MD5"))
        (BigInteger. 1)
        (format "%032x")))
+
+(defn xor
+  "Clojure has no xor??? This will treat nil as false."
+  [a b]
+  (or (and (true? a) (not (true? b)))
+      (and (true? b) (not (true? a)))))
