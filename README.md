@@ -150,3 +150,6 @@ a little better, or at least a bit more interesting.
    Clojure (or Java) is just particularly less efficient at calling `String.charAt`. From what I'm seeing, Clojure's
    RT code does end up calling `String.charAt` after doing a lot of type checks, such as ensuring the variable is
    indexable and eventually a String, the index is numeric, etc. It's a curious finding, whatever it is.
+   
+* Day 20
+  * Nothing crazy.
