@@ -153,3 +153,10 @@ a little better, or at least a bit more interesting.
    
 * Day 20
   * Nothing crazy.
+
+* Day 21
+  * I'll admit I couldn't figure out the secret trick that would make cracking the password work. I see that most
+  operations are reversible, but `rotate based on position of letter X` appears to be lossy. So after trying to figure
+  out the trick for a while, I settled for a rainbow table attack, and that's just fine for the data set.
+  * Special thanks to [Stack Overflow](https://stackoverflow.com/a/26076537) for a nice function to create all
+  permutations of a set.
