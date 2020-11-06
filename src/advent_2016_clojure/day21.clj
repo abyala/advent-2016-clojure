@@ -14,10 +14,11 @@
 
 (defn rotate-count [dir x letters]
   (let [len (count letters)
-        rot (mod x len)]
-    (if (= dir "left")
-      (vec (->> (cycle letters) (drop rot) (take len)))
-      (vec (->> (cycle letters) (drop (- len rot)) (take len))))))
+        rot (mod (if (= dir "left") x (- len x))
+                 len)]
+    (vec (->> (cycle letters)
+              (drop rot)
+              (take len)))))
 
 (defn rotate-by-letter [x letters]
   (let [index (.indexOf letters x)
@@ -64,5 +65,28 @@
 
 (defn part1 [input initial-password]
   (apply str (reduce #(apply-operation %2 %1)
-               (vec initial-password)
-               (str/split-lines input))))
+                     (vec initial-password)
+                     (str/split-lines input))))
+
+(defn permutations [coll]
+  (if (= 1 (count coll))
+    (list coll)
+    (for [head coll
+          tail (permutations (disj (set coll) head))]
+      (cons head tail))))
+
+(defn possible-passwords [len]
+  (->> (range len)
+       (map #(char (+ % (int \a))))
+       permutations))
+
+(defn part1 [input initial-password]
+  (apply str (reduce #(apply-operation %2 %1)
+                     (vec initial-password)
+                     (str/split-lines input))))
+
+(defn part2 [input existing-password]
+  (->> (possible-passwords (count existing-password))
+       (filter #(= (part1 input %) existing-password))
+       first
+       (apply str)))

@@ -8,3 +8,6 @@
 (deftest part1-test
   (is (= "decab" (part1 TEST_INPUT "abcde")))
   (is (= "bdfhgeca" (part1 PUZZLE_INPUT "abcdefgh"))))
+
+(deftest part2-test
+  (is (= "gdfcabeh" (part2 PUZZLE_INPUT "fbgdceah"))))
