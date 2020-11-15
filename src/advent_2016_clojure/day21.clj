@@ -1,5 +1,6 @@
 (ns advent-2016-clojure.day21
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [advent-2016-clojure.utils :as utils]))
 
 (defn swap-positions [pos-x pos-y letters]
   (let [x (letters pos-x) y (letters pos-y)]
@@ -68,17 +69,10 @@
                      (vec initial-password)
                      (str/split-lines input))))
 
-(defn permutations [coll]
-  (if (= 1 (count coll))
-    (list coll)
-    (for [head coll
-          tail (permutations (disj (set coll) head))]
-      (cons head tail))))
-
 (defn possible-passwords [len]
   (->> (range len)
        (map #(char (+ % (int \a))))
-       permutations))
+       (utils/permutations)))
 
 (defn part1 [input initial-password]
   (apply str (reduce #(apply-operation %2 %1)

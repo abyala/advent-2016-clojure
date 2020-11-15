@@ -164,3 +164,8 @@ a little better, or at least a bit more interesting.
 * Day 23
   * Once again, there's some clever trick that makes part 2 efficient, but I'm not spending my time on it.
   So instead, this test case completes in somewhere between 1 and 3 hours.
+  
+* Day 24
+  * Really using a lot of lessons throughout this advent.
+  * My biggest realization is that I've done a lot of shortest path algorithms; no doubt there is a bunch more reuse
+  I could sniff out from previous days if I wanted. But I'm so close to being done!
