@@ -160,3 +160,7 @@ a little better, or at least a bit more interesting.
   out the trick for a while, I settled for a rainbow table attack, and that's just fine for the data set.
   * Special thanks to [Stack Overflow](https://stackoverflow.com/a/26076537) for a nice function to create all
   permutations of a set.
+  
+* Day 23
+  * Once again, there's some clever trick that makes part 2 efficient, but I'm not spending my time on it.
+  So instead, this test case completes in somewhere between 1 and 3 hours.
