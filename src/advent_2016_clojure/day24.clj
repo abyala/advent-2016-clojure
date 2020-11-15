@@ -4,11 +4,15 @@
             [advent-2016-clojure.point :as point]
             [advent-2016-clojure.utils :as utils]))
 
+(def starting-pos \0)
+(defn walkable? [c] (not= c \#))
+(defn location? [c] (not= c \.))
+
 (defn parse-line
   "Parses a line of text into a map of coordinates to non-wall characters"
   [line y]
   (->> line
-       (keep-indexed (fn [x c] (when (not= c \#) {[x y] c})))
+       (keep-indexed (fn [x c] (when (walkable? c) {[x y] c})))
        (into {})))
 
 (defn parse-maze [input]
@@ -19,16 +23,17 @@
                     (map-indexed (fn [y line] (parse-line line y)))
                     (apply merge))
         locations (->> points
-                       (keep (fn [[coords v]] (when (not= v \.) [v coords])))
+                       (keep (fn [[coords v]] (when (location? v) [v coords])))
                        (into {}))]
     {:points (set (keys points)) :locations locations}))
 
 (defn shortest-distance
   "Given a parsed maze, returns the fewest number of steps from point a to b"
-  [maze loc-a loc-b]
-  (let [source ((maze :locations) loc-a)
-        dest ((maze :locations) loc-b)]
-    (loop [possible #{{:point    source :cost 0
+  [{locations :locations points :points} loc-a loc-b]
+  (let [source (locations loc-a)
+        dest (locations loc-b)]
+    (loop [possible #{{:point    source
+                       :cost     0
                        :estimate (point/distance source dest)}}
            seen #{}]
       (let [choice (first (sort-by (juxt :estimate) possible))
@@ -37,45 +42,43 @@
           cost
           (let [next-points (-> (point/adjacencies point)
                                 set
-                                (set/intersection (:points maze))
+                                (set/intersection points)
                                 (set/difference seen))
                 next-poss (->> next-points
-                               (map (fn [p] {:point    p
-                                             :cost     (inc cost)
-                                             :estimate (+ (inc cost)
-                                                          (point/distance p dest))}))
+                               (map #(hash-map :point %
+                                               :cost (inc cost)
+                                               :estimate (+ (inc cost)
+                                                            (point/distance % dest))))
                                set)]
             (recur (-> (set/difference possible #{choice})
                        (set/union next-poss))
                    (conj seen point))))))))
 
+(defn location-ids-in
+  "Returns the list of all locations within the maze, as a sequence of chars."
+  [maze]
+  (map first (:locations maze)))
+
 (defn all-direct-paths
   "Given a maze, returns a map of all pairs of location names and their distances.
    Format: {[id-1 id2] distance}"
   [maze]
-  (let [location-ids (->> (maze :locations)
-                          (map first))
-        paths (for [a location-ids
-                    b (filter #(< (int a) (int %)) location-ids)]
-                [a b])]
-    (->> paths
-         (map (fn [[a b]]
-                (let [dist (shortest-distance maze a b)]
-                  {[a b] dist
-                   [b a] dist})))
-         (into {}))))
+  (->> (let [location-ids (location-ids-in maze)]
+         (for [a location-ids
+               b (filter #(< (int a) (int %)) location-ids)]
+           (let [dist (shortest-distance maze a b)]
+             {[a b] dist
+              [b a] dist})))
+       (into {})))
 
 (defn sum-of-steps
   "Given a map of location pairs and their distances, plus a sequence of distances to follow,
   returns the total number of steps to go from location to location."
   [direct-paths step-order]
-  (->> step-order
-       (reduce (fn [{last :last steps :steps} dest]
-                 {:last  dest
-                  :steps (if (nil? last)
-                           0
-                           (+ steps (direct-paths [last dest])))})
-               {:steps 0})
+  (->> (reduce (fn [{last :last steps :steps} dest]
+                 {:last dest, :steps (+ steps (direct-paths [last dest]))})
+               {:last (first step-order), :steps 0}
+               (rest step-order))
        :steps))
 
 (defn solve2
@@ -84,10 +87,9 @@
   [input path-fun]
   (let [maze (parse-maze input)
         distances (all-direct-paths maze)]
-    (->> (:locations maze)
-         (map first)
+    (->> (location-ids-in maze)
          utils/permutations
-         (filter #(= \0 (first %)))
+         (filter #(= starting-pos (first %)))
          (map path-fun)
          (map #(sum-of-steps distances %))
          (apply min))))
@@ -96,4 +98,4 @@
   (solve2 input identity))
 
 (defn part2 [input]
-  (solve2 input #(concat % '(\0))))
+  (solve2 input #(concat % (list starting-pos))))
