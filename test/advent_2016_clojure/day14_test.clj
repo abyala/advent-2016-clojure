@@ -4,9 +4,13 @@
 
 (def PUZZLE_INPUT "zpqevtbw")
 
+(deftest stretched-hash-test
+  (is (= "577571be4de9dcce85a041ba0410f29f" (stretched-hash "abc0" 1)))
+  (is (= "a107ff634856bb300138cac6568c0f24" (stretched-hash "abc0" 2017))))
+
 (deftest salted-hashes-test
   (is (= '("577571be4de9dcce85a041ba0410f29f" "23734cd52ad4a4fb877d8a1e26e5df5f")
-         (take 2 (salted-hashes "abc")))))
+         (take 2 (salted-hashes "abc" 1)))))
 
 (deftest repeats-of-length-test
   (is (= () (repeats-of-length 3 "aabbaabbccabc")))
@@ -37,12 +41,16 @@
   (is (nil? (key? \b [[0 nil #{}] [1 #{\a \b} #{\a}]]))))
 
 (deftest windowed-hashes-test
-  (is (= '(39 92) (take 2 (windowed-hashes "abc")))))
+  (is (= '(39 92) (take 2 (windowed-hashes "abc" 1)))))
 
 (deftest nth-hash-test
-  (is (= 39 (nth-hash 1 "abc")))
-  (is (= 92 (nth-hash 2 "abc"))))
+  (is (= 39 (nth-hash 1 "abc" 1)))
+  (is (= 92 (nth-hash 2 "abc" 1))))
 
 (deftest part1-test
   (is (= 22728 (part1 "abc")))
   (is (= 16106 (part1 PUZZLE_INPUT))))
+
+(deftest part2-test
+  (is (= 22551 (part2 "abc")))
+  (is (= 22423 (part2 PUZZLE_INPUT))))
