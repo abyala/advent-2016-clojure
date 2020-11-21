@@ -2,7 +2,7 @@
   (:require [advent-2016-clojure.assembunny :as bunny]))
 
 (defn part1 [input]
-  (bunny/solve input bunny/empty-registers))
+  (bunny/computer-final-register-a input bunny/empty-registers))
 
 (defn part2 [input]
-  (bunny/solve input (assoc bunny/empty-registers "c" 1)))
+  (bunny/computer-final-register-a input (assoc bunny/empty-registers "c" 1)))

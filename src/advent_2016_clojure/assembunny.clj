@@ -1,5 +1,6 @@
 (ns advent-2016-clojure.assembunny
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.core.async :refer [chan put! close!]]))
 
 (defn maybe-parse-int [v]
   (try (Integer/parseInt v)
@@ -29,11 +30,13 @@
                       (if (= old-cmd "jnz") "cpy" "jnz"))]
         (assoc-in instructions [target-index 0] new-cmd))
       instructions)))
+(defn transmit [x registers transmit-channel]
+  (put! transmit-channel (val-or-register registers x)))
 
 (defn apply-instruction
   "Returns a map {:registers registers, :jump-by jump-by}
    with instructions on the next registers and instruction jump amount."
-  [instructions index registers]
+  [instructions index registers transmit-channel]
   (let [[cmd x y] (get instructions index)]
     (merge {:registers registers :jump-by 1 :instructions instructions}
            (case cmd
@@ -41,22 +44,34 @@
              "inc" {:registers (inc-reg x registers)}
              "dec" {:registers (dec-reg x registers)}
              "jnz" {:jump-by (or (jump-reg x y registers) 1)}
-             "tgl" {:instructions (toggle x registers instructions index)}))))
+             "tgl" {:instructions (toggle x registers instructions index)}
+             "out" (do (transmit x registers transmit-channel)
+                       {})))))
 
 (defn input-to-instructions [input]
   (->> (str/split-lines input)
        (map #(str/split % #" "))
        vec))
 
-(defn solve [input starting-registers]
+(defn run-bunny [input starting-registers transmit-channel]
   (loop [instructions (input-to-instructions input)
          index 0
          registers starting-registers]
     (if (>= index (count instructions))
-      (registers "a")
-      (let [applied (apply-instruction instructions index registers)]
+      (do
+        (close! transmit-channel)
+        (registers "a"))
+      (let [applied (apply-instruction instructions index registers transmit-channel)]
         (recur (applied :instructions)
                (+ index (applied :jump-by))
                (applied :registers))))))
+
+(defn compute-final-register-a [input starting-registers]
+  (run-bunny input starting-registers (chan 10)))
+
+(defn compute-output-transmissions [input starting-registers]
+  (let [c (chan 10)]
+    (future (run-bunny input starting-registers c))
+    c))
 
 (def empty-registers {"a" 0 "b" 0 "c" 0 "d" 0})
