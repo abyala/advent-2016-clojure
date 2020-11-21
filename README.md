@@ -116,6 +116,11 @@ a little better, or at least a bit more interesting.
 * Day 13
   * Meh.
   
+* Day 14
+  * This one stumpted me, and I went all the way to day 25.  Then I reread the instructions, which said to only include
+  the first matching triplet, instead of matching any of them.  :shrug:
+  * I like the `some` function as the equivalent of the `any` Kotlin function.
+  
 * Day 15
   * First fun part was the `cycle` function within `create-disk` which is the easiest way to create a repeating
   sequence, in this case of a closed range.

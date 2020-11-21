@@ -13,17 +13,16 @@
   (->> (range (- (count word) (dec length)))
        (map #(subs word % (+ % length)))
        (filter #(apply = %))
-       (map first)
-       set))
+       (map first)))
+(defn first-triplet  [word] (first (repeats-of-length 3 word)))
+(defn all-quints [word] (set (repeats-of-length 5 word)))
 
 (defn repeat-tuple [idx hash]
-  [idx (repeats-of-length 3 hash) (repeats-of-length 5 hash)])
+  [idx (first-triplet hash) (all-quints hash)])
 
-(defn key? [triples others]
-  (->> others
-       (map #(set/intersection triples (nth % 2)))
-       (some not-empty)
-       some?))
+(defn key? [triple others]
+  (->> (map #(nth % 2) others)
+       (some #(contains? % triple))))
 
 (defn windowed-hashes
   ; for now, assume the size is always 1000 so I can have simple argument sizes
