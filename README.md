@@ -155,7 +155,15 @@ a little better, or at least a bit more interesting.
    Clojure (or Java) is just particularly less efficient at calling `String.charAt`. From what I'm seeing, Clojure's
    RT code does end up calling `String.charAt` after doing a lot of type checks, such as ensuring the variable is
    indexable and eventually a String, the index is numeric, etc. It's a curious finding, whatever it is.
-   
+
+* Day 19
+  * The simple algorithm of removing from a vector, or rotating a vector around with each removal, performed too slowly.
+  * Part 1 would have been easy with a simple `partition 2`, but that didn't work for part 2.
+  * My solution required some spreadsheet work to verify for part 2, but it involved calculating potential thefts using
+  just indexes within a array _size_, and then mapping those indexes to the actual elf IDs. To avoid complexity with
+  stealing from an index with a lower index, I only allowed forward-steals, and then I used `into` and `split-at` to
+  rotate elves who had already stolen to the back of the vector.
+
 * Day 20
   * Nothing crazy.
 
