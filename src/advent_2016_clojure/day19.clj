@@ -1,13 +1,14 @@
 (ns advent-2016-clojure.day19)
 
-; NEW ALGORITHM:
+; ALGORITHM:
 ; 1. Start with a vector of actual values [1 through n]
-; 2. Keep-map each value to the index it wants to steal from
+; 2. Keep vectors of each thieving elf and the elf it wants to steal from
 ;    a. Part 1 - map even indexes to nil
 ;    b. Part 2 - map based on original count + diff and 1 or 2
 ;    c. Ignore when target index goes above the actual count
+;    d. After we have the indexes, map both thieves and victims to their values
 ; 3. Split the first parts (thieves) from the second (victims)
-; 4. Determine the last theft as max of the first group
+; 4. Determine the last theft from the first group
 ; 5. Make a set of all victims
 ; 6. Create a new vector of non-victims
 ; 7. Pivot subvectors up and including the last thief
@@ -26,10 +27,9 @@
   (fn [i total]
     (+ (quot total 2)
        (* 3 (quot i 2))
-       (cond
-         (even? i) 0
-         (even? total) 1
-         :else 2))))
+       (cond (even? i) 0
+             (even? total) 1
+             :else 2))))
 
 (defn find-thefts
   "Given a vector of elves, return a sequence of [thief victim]"
