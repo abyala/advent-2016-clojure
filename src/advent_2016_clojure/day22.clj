@@ -24,22 +24,63 @@
 
 (defn coords-of [{x :x y :y}] [x y])
 
-(defn eligible-moves [disks]
-  (->> (eligible-pairs disks)
-       (keep (fn [[a b]] (when (neighbor? a b) [(coords-of a) (coords-of b)])))))
+#_(defn eligible-moves [disks]
+    (println "ELIGIBLE MOVES: Looking at: " disks)
+    (->> (eligible-pairs disks)
+         (keep (fn [[a b]] (when (neighbor? a b) [(coords-of a) (coords-of b)])))))
+
+(defn eligible-moves [state]
+  (->> (vals (:disks state))
+       (eligible-pairs)
+       (keep (fn [[a b]] (when (neighbor? a b)
+                           [(coords-of a) (coords-of b)])))))
 
 (defn parse-line [line]
-  (let [tokens (re-matches #"/dev/grid/node-x(\d+)-y(\d+)\s+(\d+)T\s+(\d+)T\s+(\d+)T\s+(\d+)\%" line)
-        [x y size used avail _] (->> (drop 1 tokens)
-                                     (map #(Integer/parseInt %)))]
-    {:x x :y y :size size :used used :avail avail}))
+  (when-let [tokens (re-matches #"/dev/grid/node-x(\d+)-y(\d+)\s+(\d+)T\s+(\d+)T\s+(\d+)T\s+(\d+)\%" line)]
+    (let [[x y size used avail _] (->> (drop 1 tokens)
+                                       (map #(Integer/parseInt %)))]
+      {:x x :y y :size size :used used :avail avail})))
 
 (defn parse-input [input]
   (->> (str/split-lines input)
-       (drop 2)
-       (map parse-line)))
+       (map parse-line)
+       (keep identity)))
 
 (defn part1 [input]
   (->> (parse-input input)
        eligible-pairs
        count))
+
+(defn starting-coords [disks]
+  (->> (map coords-of disks)
+       (filter #(zero? (second %)))
+       sort
+       last))
+
+(defn find-empty-disk [state]
+  (first (filter #(not (used-disk? %)) state)))
+
+(defn first-x-of-wall [state]
+  (->> (filter #(> (:used %) 100) state)
+       (map :x)
+       (apply min)))
+
+; Don't even get me started. This was a gimmick.
+(defn incredibly-irritating-part-2 [input]
+  (let [state (parse-input input)
+        [target-x _] (starting-coords state)
+        wall-x (first-x-of-wall state)
+        {empty-x :x empty-y :y} (find-empty-disk state)]
+    ; Add together:
+    ; - Steps to move the empty block to the start of the wall
+    ; - Then one step past to clear the wall
+    ; - Then all the way to the top
+    ; - Then next to the target data
+    ; - Then swap it with the target data itself
+    ; - Then 5 steps for each step to move the hole around the data, and then swap it
+    (+ (- empty-x wall-x)
+       1
+       empty-y
+       (- target-x wall-x)
+       1
+       (* 5 (dec target-x)))))

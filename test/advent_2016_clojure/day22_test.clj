@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [advent-2016-clojure.day22 :refer :all]))
 
-(def TEST_INPUT "swap position 4 with position 0\nswap letter d with letter b\nreverse positions 0 through 4\nrotate left 1 step\nmove position 1 to position 4\nmove position 3 to position 0\nrotate based on position of letter b\nrotate based on position of letter d")
+(def TEST_INPUT "Filesystem            Size  Used  Avail  Use%\n/dev/grid/node-x0-y0   10T    8T     2T   80%\n/dev/grid/node-x0-y1   11T    6T     5T   54%\n/dev/grid/node-x0-y2   32T   28T     4T   87%\n/dev/grid/node-x1-y0    9T    7T     2T   77%\n/dev/grid/node-x1-y1    8T    0T     8T    0%\n/dev/grid/node-x1-y2   11T    7T     4T   63%\n/dev/grid/node-x2-y0   10T    6T     4T   60%\n/dev/grid/node-x2-y1    9T    8T     1T   88%\n/dev/grid/node-x2-y2    9T    6T     3T   66%")
 (def PUZZLE_INPUT (slurp "test\\advent_2016_clojure\\day22-data.txt"))
 
 (deftest part1-test
@@ -33,13 +33,9 @@
 (deftest coords-of-test
   (is (= [2 3] (coords-of {:x 2 :y 3 :size 5 :used 4 :avail 1}))))
 
-(deftest eligible-moves-test
-  (let [p1 {:x 1 :y 2 :size 5 :used 4 :avail 1}
-        p2 {:x 2 :y 3 :size 6 :used 0 :avail 6}
-        p3 {:x 2 :y 4 :size 7 :used 4 :avail 3}]
-    (is (= (list [[2 4] [2 3]])
-           (eligible-moves (list p1 p2 p3))))))
-
 (deftest parse-line-test
   (is (= {:x 1 :y 2 :size 5 :used 4 :avail 1}
          (parse-line "/dev/grid/node-x1-y2   5T    4T     1T   80%"))))
+
+(deftest part2-test
+  (is (= 188 (incredibly-irritating-part-2 PUZZLE_INPUT))))

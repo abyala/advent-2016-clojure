@@ -174,6 +174,19 @@ a little better, or at least a bit more interesting.
   * Special thanks to [Stack Overflow](https://stackoverflow.com/a/26076537) for a nice function to create all
   permutations of a set.
   
+* Day 22
+  * I am so angry at this problem. I spent hours and hours trying to write this and rewrite this, looking for potential
+  memory issues, bad algorithms, inefficient usages of the language, etc. No, this was a gimmick.  To get to the
+  answer, you had to manually inspect the data (or draw it out), and come up with an algorithm that does not always
+  for the problem statement, but rather just happens to work for this one particular scenario. What a horrible problem.
+  * In case I ever read this again, the secret is to see that in the data grid, there happens to be a horizontal wall
+  of very large disks that have little available space (in my case, at y=14), and nothing can get past that. Further,
+  there is one disk that's empty, so we assume _circumstantially_ that all data must be swapped into this one disk. So
+  the solution is to move the empty data to the left of the wall, then all the way to the top (y=0), then to the right
+  and onto the target data spot. Then the data can move one spot to the left by moving the empty disk down, twice to
+  the left, back up, and then swap, so that's x*5.
+  * I hope there aren't more of these in other AoCs. 
+  
 * Day 23
   * Once again, there's some clever trick that makes part 2 efficient, but I'm not spending my time on it.
   So instead, this test case completes in somewhere between 1 and 3 hours.
