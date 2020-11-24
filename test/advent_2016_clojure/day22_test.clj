@@ -25,11 +25,6 @@
     (is (= (list [p1 p2] [p3 p2])
            (eligible-pairs (list p1 p2 p3))))))
 
-(deftest neighbor-test
-  (is (true? (neighbor? {:x 1 :y 2} {:x 0 :y 2})))
-  (is (true? (neighbor? {:x 1 :y 2} {:x 1 :y 1})))
-  (is (false? (neighbor? {:x 1 :y 2} {:x 0 :y 1}))))
-
 (deftest coords-of-test
   (is (= [2 3] (coords-of {:x 2 :y 3 :size 5 :used 4 :avail 1}))))
 

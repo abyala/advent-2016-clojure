@@ -1,13 +1,5 @@
-; State: {
-;   :disks {point->disk}
-;   :target point
-;   :cost
-;   :estimate
-
 (ns advent-2016-clojure.day22
-  (:require [clojure.string :as str]
-            [clojure.set :as set]
-            [advent-2016-clojure.point :as point]))
+  (:require [clojure.string :as str]))
 
 (defn used-disk? [{used :used}] (pos? used))
 (defn can-transfer? [{src :used} {dest :avail}] (>= dest src))
@@ -19,21 +11,7 @@
                   disks)]
     [a b]))
 
-(defn neighbor? [{x1 :x y1 :y} {x2 :x y2 :y}]
-  (= 1 (point/distance [x1 y1] [x2 y2])))
-
 (defn coords-of [{x :x y :y}] [x y])
-
-#_(defn eligible-moves [disks]
-    (println "ELIGIBLE MOVES: Looking at: " disks)
-    (->> (eligible-pairs disks)
-         (keep (fn [[a b]] (when (neighbor? a b) [(coords-of a) (coords-of b)])))))
-
-(defn eligible-moves [state]
-  (->> (vals (:disks state))
-       (eligible-pairs)
-       (keep (fn [[a b]] (when (neighbor? a b)
-                           [(coords-of a) (coords-of b)])))))
 
 (defn parse-line [line]
   (when-let [tokens (re-matches #"/dev/grid/node-x(\d+)-y(\d+)\s+(\d+)T\s+(\d+)T\s+(\d+)T\s+(\d+)\%" line)]
