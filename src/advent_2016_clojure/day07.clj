@@ -21,7 +21,7 @@
                  (subs s (inc close-idx))))))))
 
 (defn supports-tls? [input]
-  (let [{seqs :seqs hyper :hyper} (address-components input)]
+  (let [{:keys [seqs hyper]} (address-components input)]
     (and (some is-abba? seqs)
          (not-any? is-abba? hyper))))
 
@@ -36,7 +36,7 @@
        (map (fn [[a b]] [b a]))))
 
 (defn supports-ssl? [input]
-  (let [{seqs :seqs hyper :hyper} (address-components input)]
+  (let [{:keys [seqs hyper]} (address-components input)]
     ((complement empty?) (set/intersection (reduce into #{} (map ab-pairs seqs))
                                            (reduce into #{} (map ba-pairs hyper))))))
 

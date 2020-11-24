@@ -8,7 +8,7 @@
 ;                        3 ({:type :generator :element "lithium"})}}
 
 (defn possible-next-floors [floor]
-  (filter #(and (> % 0) (< % 5))
+  (filter #(< 0 % 5)
           (list (dec floor) (inc floor))))
 
 (defn possible-pairs [line]
@@ -38,8 +38,8 @@
        (map safe-floor?)
        (every? true?)))
 
-(defn final-state? [state]
-  (->> (dissoc (state :floors) 4)
+(defn final-state? [{f :floors}]
+  (->> (dissoc f 4)
        vals
        (every? empty?)))
 
@@ -81,11 +81,10 @@
 (defn closest-candidate [candidates]
   (first (sort #(compare (:distance %1) (:distance %2)) candidates)))
 
-(defn state-summary [state]
-  {:elevator (state :elevator)
-   :elements (->> state
-                  :floors
-                  (map (fn [[num items]] (map (fn [item] {:element (:element item)
+(defn state-summary [{:keys [elevator floors]}]
+  {:elevator elevator
+   :elements (->> floors
+                  (map (fn [[num items]] (map (fn [item] {:element     (:element item)
                                                           (:type item) num})
                                               items)))
                   (apply concat)

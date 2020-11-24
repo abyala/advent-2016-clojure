@@ -37,7 +37,7 @@
 
 (defn calculate-code [keypad input]
   (let [lines (str/split-lines input)
-        final-state (reduce (fn [{start :start codes :codes} line]
+        final-state (reduce (fn [{:keys [start codes]} line]
                               (let [next (next-button keypad start line)]
                                 {:start next :codes (str codes next)}))
                             {:start 5 :codes ""}

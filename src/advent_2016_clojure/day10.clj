@@ -11,7 +11,7 @@
 
 (defn move-chips "Removes the two chips from the sending bot to two other bots or outputs."
   [snd rcv1-type rcv1 rcv2-type rcv2 state]
-  (let [[low high] (sort (take 2 ((state :bots) snd)))]
+  (let [[low high] (sort (take 2 (get-in state [:bots snd])))]
     (->> state
          (remove-chips snd)
          (give-chip low rcv1-type rcv1)
@@ -24,8 +24,8 @@
 (defn move-if-possible "If a bot is able to move chips, returns {:comparison [bot (chips)], :state new-state]}"
   [state]
   (when-let [bot (first (bots-available-to-move state))]
-    (let [comparison [bot ((state :bots) bot)]]
-      {:comparison comparison :state (((state :algs) bot) state)})))
+    (let [comparison [bot (get-in state [:bots bot])]]
+      {:comparison comparison :state ((get-in state [:algs bot]) state)})))
 
 (defn initialize-state-with-line "Reads a line of input and applies it to the state."
   [state line]
@@ -53,5 +53,5 @@
   (let [target-outputs '(0 1 2)]
     (loop [state (initialize-input input)]
       (if (every? #(contains? (state :outputs) %) target-outputs)
-        (apply * (map #(first ((state :outputs) %)) target-outputs))
+        (apply * (map #(first (get-in state [:outputs %])) target-outputs))
         (recur ((move-if-possible state) :state))))))
